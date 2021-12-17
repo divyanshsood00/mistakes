@@ -147,7 +147,7 @@ EMAIL_HOST_PASSWORD = 'thisisthething@00'
 
 STATIC_URL = 'static/'
 # For getting saved user images,refer forms and form.html
-MEDIA_URL = '/images/'
+MEDIA_URL = 'images/user-images/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')

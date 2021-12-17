@@ -17,7 +17,8 @@ class Blog(models.Model):
     description = models.TextField(default=None)
     # featured_image = models.ImageField(
     #     null=True, blank=True, default='default.jpg')
-    featured_image = CloudinaryField('image', default='default.jpg')
+    featured_image = CloudinaryField(
+        'image', default='', blank=True, null=True)
     demo_link = models.CharField(max_length=2000, null=True, blank=True)
     source_link = models.CharField(max_length=2000, null=True, blank=True)
     # Could have done (Tag) if class Tag was above, "..." delays execution so it works anyways then

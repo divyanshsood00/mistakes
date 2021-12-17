@@ -55,15 +55,17 @@ def createBlog(request):
         if form.is_valid():
             blog = form.save(commit=False)
             blog.author = profile
-            newtags = request.POST.get('newtags').split(',')
-            for tag in newtags:
-                try:
-                    ntag = Tag.objects.get(
-                        name=tag.strip().capitalize())
-                except:
-                    ntag = Tag.objects.create(
-                        name=tag.strip().capitalize())
-                blog.tags.add(ntag)
+            # newtags = request.POST.get('newtags')
+            # if newtags:
+            #     newtags = newtags.split(',')
+            # for tag in newtags:
+            #     try:
+            #         ntag = Tag.objects.get(
+            #             name=tag.strip().capitalize())
+            #     except:
+            #         ntag = Tag.objects.create(
+            #             name=tag.strip().capitalize())
+            #     blog.tags.add(ntag)
             blog.save()
             messages.success(request, "Mistake Created")
             return redirect('account')

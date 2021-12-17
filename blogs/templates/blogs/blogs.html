@@ -29,8 +29,14 @@
           <div class="card project">
             <a href="{% url 'blog' b.id %}" class="project" style='width:100%;position:relative'>
               <div class="img-container">
-                <img class="project__thumbnail"  src="{{b.imageURL}}" style="max-height:350px;" alt="{{b.title}}" />
-
+                {% comment %} <img class="project__thumbnail"  src="{{b.imageURL}}" style="max-height:350px;" alt="{{b.title}}" /> {% endcomment %}
+                {% if b.featured_image.url%}
+                <img class="project__thumbnail" style="max-height:350px;" src="{{b.imageURL}}"
+                alt="{{b.title}}" />
+                {% else %}
+                <img class="project__thumbnail" style="max-height:350px;" src="https://res.cloudinary.com/mistakes/image/upload/v1639782182/mistakes/user-images/default_wwv4ka.jpg"
+                alt="{{b.title}}" />
+                {% endif %}
               </div>
               <div class="card__body">
                 <h3 class="project__title">{{b.title}}</h3>

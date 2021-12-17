@@ -20,7 +20,7 @@
           <li class="header__menuItem"><a href="{% url 'inbox' %}">Inbox<sup class='tag tag--pill tag--main'
                 style="padding:5px;height:15px">{{request.user.profile.messages.all.count}}</sup></a>
           </li>
-          <li class="header__menuItem"><a href="{% url 'create-blog' %}?next=account"> Discuss mIsTakE</a></li>
+          <li class="header__menuItem"><a href="{% url 'create-blog' %}?next=account">Write</a></li>
           <li class="header__menuItem"><a href="{% url 'account' %}"> Account </a></li>
           <li class="header__menuItem"><a href="{% url 'logout' %}" class="btn btn--sub">Log Out</a></li>
           {% else %}

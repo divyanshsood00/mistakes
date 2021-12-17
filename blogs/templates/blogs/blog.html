@@ -24,7 +24,14 @@
 				{% endif %}
 			</div>
 			<div class="column column--2of3">
-				<img class="singleProject__preview" src="{{blog.imageURL}}" alt="{{blog.title}}" />
+				{% comment %} <img class="singleProject__preview" src="{{blog.imageURL}}" alt="{{blog.title}}" /> {% endcomment %}
+				{% if blog.featured_image.url %}
+				<img class="singleProject__preview" style="width:100%" src="{{blog.imageURL}}"
+				alt="{{blog.title}}" />
+				{% else %}
+				<img class="singleProject__preview" style="width:100%" src="https://res.cloudinary.com/mistakes/image/upload/v1639782182/mistakes/user-images/default_wwv4ka.jpg"
+				alt="{{blog.title}}" />
+				{% endif %}
 				<a href="{% url 'profile' blog.author.id %}" class="singleProject__developer">By {{blog.author}}</a>
 				<h2 class="singleProject__title">{{blog.title}}</h2>
 				{% if blog.short_intro %}

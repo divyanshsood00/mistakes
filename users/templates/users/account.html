@@ -99,7 +99,7 @@
 				</div>
 
 				<div class="settings">
-					<h3 class="settings__title">Mistake Discussions</h3>
+					<h3 class="settings__title">Mistakes</h3>
 					<a class="tag tag--pill tag--sub settings__btn tag--lg"
 						href="{% url 'create-blog'%}?next=account"><i class="im im-plus"></i> Add Mistake</a>
 				</div>
@@ -108,8 +108,17 @@
 					{% for blog in blogs %}
 					<tr>
 						<td class="settings__thumbnail">
-							<a href="single-project.html"><img src="{{blog.imageURL}}"
-									alt="Project Thumbnail" /></a>
+							{% comment %} <a href="single-project.html"><img src="{{blog.imageURL}}"
+									alt="Project Thumbnail" /></a> {% endcomment %}
+							<a href="{% url 'blog' blog.id %}">
+							{% if blog.featured_image.url %}
+							<img src="{{blog.imageURL}}"
+							alt="{{blog.title}}" />
+							{% else %}
+							<img src="https://res.cloudinary.com/mistakes/image/upload/v1639782182/mistakes/user-images/default_wwv4ka.jpg"
+							alt="{{blog.title}}" />
+							{% endif %}
+							</a>
 						</td>
 						<td class="settings__tableInfo">
 							<a href="{% url 'blog' blog.id%}">{{blog.title}}</a>
