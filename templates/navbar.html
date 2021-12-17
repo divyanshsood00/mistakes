@@ -1,0 +1,34 @@
+{% load static %}
+<div>
+
+  <header class="header" >
+    <div class="container container--narrow">
+      <a href="{% url 'blogs'%}" class="header__logo">
+        <img src="{% static 'images/favicon/android-chrome-512x512.png'%}" alt="Mistakes - We make mistakes logo" />
+      </a>
+      <nav class="header__nav">
+        <input type="checkbox" id="responsive-menu" />
+        <label for="responsive-menu" class="toggle-menu">
+          <span>Menu</span>
+        </label>
+        <ul class="header__menu">
+          <li class="header__menuItem"><a href="{% url 'profiles' %}">Authors</a></li>
+          <li class="header__menuItem"><a href="{% url 'blogs' %}">Blogs</a></li>
+          {% comment %} <li class="header__menuItem"><a href="account.html">My Account</a></li> {% endcomment %}
+          {% if request.user.is_authenticated %}
+          {% comment %} Well Search how to pass params without calling function {% endcomment %}
+          <li class="header__menuItem"><a href="{% url 'inbox' %}">Inbox<sup class='tag tag--pill tag--main'
+                style="padding:5px;height:15px">{{request.user.profile.messages.all.count}}</sup></a>
+          </li>
+          <li class="header__menuItem"><a href="{% url 'create-blog' %}?next=account"> Discuss mIsTakE</a></li>
+          <li class="header__menuItem"><a href="{% url 'account' %}"> Account </a></li>
+          <li class="header__menuItem"><a href="{% url 'logout' %}" class="btn btn--sub">Log Out</a></li>
+          {% else %}
+          <li class="header__menuItem"><a href="{% url 'login' %}" class="btn btn--sub">Login/Sign Up</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div>

@@ -1,0 +1,64 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<main class="projects">
+  <section class="hero-section text-center">
+    <div class="container container--narrow">
+      <div class="hero-section__box">
+        <h2>Search for <span>Mistakes</span></h2>
+      </div>
+
+      <div class="hero-section__search">
+        <form class="form" id="searchForm" action="{% url 'blogs' %}" method="GET">
+          <div class="form__field">
+            <label for="formInput#search">Search By Mistakes </label>
+            <input style="width:100%" class="input input--text" id="formInput#search" type="text" name="search_query"
+              placeholder="Title or Author or Content or Tags" value="{{search_query}}" />
+          </div>
+
+          <input class="btn btn--sub btn--lg" type="submit" value="Search" />
+        </form>
+      </div>
+    </div>
+  </section>
+  <section class="projectsList">
+    <div class="container">
+      <div class="grid grid--three">
+        {% for b in blogs %}
+        <div class="column">
+          <div class="card project">
+            <a href="{% url 'blog' b.id %}" class="project" style='width:100%;position:relative'>
+              <div class="img-container">
+                <img class="project__thumbnail"  src="{{b.imageURL}}" style="max-height:350px;" alt="{{b.title}}" />
+
+              </div>
+              <div class="card__body">
+                <h3 class="project__title">{{b.title}}</h3>
+                <p><a class="project__author" href="{% url 'profile' b.author.id%}">By {{b.author}}</a></p>
+                {% if b.short_intro %}
+                <p>{{b.short_intro}}</p>
+                {% endif %}
+                <p class="project--rating">
+                  <span style="font-weight: bold;">{{b.vote_ratio}}%</span> Positive
+                  Feedback ({{b.vote_total}} Vote{{b.vote_total|pluralize:'s'}})
+                </p>
+                <div class="project__tags">
+                  {% for t in b.tags.all %}
+                  <span class="tag tag--pill tag--main">
+                    <small>{{t.name}}</small>
+                  </span>
+                  {% endfor %}
+
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  {% include 'pagination.html' with query_set=blogs custom_range=custom_range%}
+  
+</main>
+{% endblock content %}

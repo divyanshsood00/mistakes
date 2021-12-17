@@ -1,0 +1,1 @@
+web: gunicorn mistakes.wsgi --log-file -

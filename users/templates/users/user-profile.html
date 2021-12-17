@@ -1,0 +1,140 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<main class="settingsPage profile my-md">
+	<div class="container">
+		<div class="layout">
+			<div class="column column--1of3">
+
+				<div class="card text-center">
+					<div class="card__body dev">
+						<!-- <div class="avatar">{{p.name|slice:'1'}}</div> -->
+						{% comment %} <img class="avatar avatar--xl dev__avatar" src="{{p.imageURL}}" />
+						{% endcomment %}
+						<h2 class="dev__name">{{p.name}}</h2>
+						<p class="dev__title">{{p.short_intro}}</p>
+						<p class="dev__location">Based in {{p.location}}</p>
+						<ul class="dev__social">
+							{% if p.social_facebook %}
+							<li>
+								<a title="Facebook" href="{{p.social_facebook}}" target="_blank"><i
+										class="im im-facebook"></i></a>
+							</li>
+							{% endif %}
+							{% if p.social_instagram %}
+							<li>
+								<a title="Instagram" href="{{p.social_instagram}}" target="_blank"><i
+										class="im im-instagram"></i></a>
+							</li>
+							{% endif %}
+							{% if p.social_twitter %}
+							<li>
+								<a title="Twitter" href="{{p.social_twitter}}" target="_blank"><i
+										class="im im-twitter"></i></a>
+							</li>
+							{% endif %}
+							{% if p.social_linkedin %}
+							<li>
+								<a title="LinkedIn" href="{{p.social_linkedin}}" target="_blank"><i
+										class="im im-linkedin"></i></a>
+							</li>
+							{% endif %}
+							{% if p.social_youtube %}
+							<li>
+								<a title="Youtube" href="{{p.social_youtube}}" target="_blank"><i
+										class="im im-youtube"></i></a>
+							</li>
+							{% endif %}
+							{% if p.social_website %}
+							<li>
+								<a title="Personal Website" href="{{p.social_website}}" target="_blank"><i
+										class="im im-globe"></i></a>
+							</li>
+							{% endif %}
+						</ul>
+						{% if request.user.profile.id != p.id %}
+						<a href="{% url 'create-message' p.id %}" class="btn btn--sub btn--lg">Send Message </a>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+			<div class="column column--2of3">
+				{% if p.bio %}
+				<div class="devInfo">
+					<h3 class="devInfo__title">About Me</h3>
+					<p class="devInfo__about">
+						{{p.bio}}
+					</p>
+				</div>
+				{% endif %}
+				<div class="devInfo">
+					<h3 class="devInfo__title">Interests</h3>
+					<div class="devInfo__skills">
+						{% if topSkills %}
+						{% for t in topSkills %}
+						<div class="devSkill">
+							<h4 class="devSkill__title">{{t.name}}</h4>
+							<p class="devSkill__info">{{t.description}}</p>
+						</div>
+						{% endfor %}
+						{% else %}
+						<div class="devSkill" style='opacity:.4'>
+							<h4 class="devSkill__title">Interest</h4>
+							<p class="devSkill__info">Interest Description in a couple of words....</p>
+						</div>
+						{% endif %}
+						{% if otherSkills %}
+						<h3 class="devInfo__subtitle">Other Interests</h3>
+						<div class="devInfo__otherSkills">
+							{% for o in otherSkills %}
+							<span class="tag tag--pill tag--sub tag--lg">
+								<small>{{o.name}}</small>
+							</span>
+							{% endfor %}
+						</div>
+						{% endif %}
+					</div>
+				</div>
+
+				<div class="devInfo">
+					<h3 class="devInfo__title">Mistakes</h3>
+					<div class="grid grid--two">
+						{% for blog in p.blog_set.all %}
+						<div class="column">
+							<div class="card project">
+								<a href="{% url 'blog' blog.id%}}" class="project" style="width:100%">
+									<img class="project__thumbnail" style="width:100%" src="{{blog.imageURL}}"
+										alt="{{blog.title}}" />
+									<div class="card__body">
+										<h3 class="project__title">{{blog.title}}</h3>
+										<a class="project__author" href="{% url 'profile' blog.author.id %}">By
+											{{blog.author}}</a>
+										{% if blog.short_intro %}
+										<p>{{blog.short_intro|slice:'100'}}</p>
+										<br />
+										{% endif %}
+										<p class="project--rating">
+											<span style="font-weight: bold;">{{blog.vote_ratio}}%</span> Positive
+											Feedback ( {{blog.vote_total}} Votes)
+										</p>
+										<div class="project__tags">
+											{% for tag in blog.tags.all|slice:'3' %}
+											<span class="tag tag--pill tag--main">
+												<small>{{tag.name}}</small>
+											</span>
+											{% endfor %}
+										</div>
+									</div>
+								</a>
+							</div>
+						</div>
+						{% endfor %}
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</main>
+{% endblock content %}

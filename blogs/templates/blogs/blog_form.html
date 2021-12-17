@@ -1,0 +1,60 @@
+{% extends 'main.html' %}
+
+{% block content %}
+{% comment %} Enctype makes it send image instead of just path or whatnot, also check forms.py, settings.py
+{% endcomment %}
+<main class="formPage my-xl">
+    <div class="content-box">
+        <div class="formWrapper">
+            <a class="backButton" href="{% url request.GET.next %}"><i class="im im-angle-left"></i></a>
+            <h4 style="text-align:center;color:var(--color-main)">Add your Mistake</h4>
+            <br>
+
+            <form class="form" action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <!-- Input:Text -->
+                {% for field in form %}
+                <div class="form__field">
+                    <label for="formInput#text">{{field.label}} </label>
+                    {{field}}
+                    {% comment %} <input class="input input--text" id="formInput#text" type="text" name="text"
+                        placeholder="Enter text" /> {% endcomment %}
+                </div>
+
+
+                {% endfor %}
+                <label for="formInput#text">Tags</label>
+                <br />
+                {% if blog %}
+                <textarea name="newtags" id="newtags" class='input input--textarea--sm'
+                placeholder="Add MORE tags here, separate them with commas..." value=""></textarea>
+                {% else %}
+                <p>Sorry for inconvenience: Only available while editing mistake(Goto account -> edit mistake), not while creating, Known bug, I will resolve that asap</p>
+                {% endif %}
+                {% if blog and blog.tags.all %}
+                <p>Already added tags are: </p>
+                {% for tag in blog.tags.all %}
+                <span class="blog-tag tag tag--pill tag--main" data-tag="{{tag.id}}"
+                    data-blog="{{blog.id}}">{{tag.name}} &#215;</span>
+                {% endfor %}
+                <br />
+                {% endif %}
+
+                <input class="btn btn--sub btn--lg  my-md" type="submit" value="Submit" />
+            </form>
+        </div>
+    </div>
+</main>
+
+{% comment %} <script>
+    let tags = document.getElementsByClassName('blog-tag');
+
+    for (let i = 0; tags.length > i; i++) {
+        tags[i].addEventListener('click', (e) => {
+            let tagID = e.target.dataset.tag;
+            let blogID = e.target.dataset.blog;
+            console.log(tagID, blogID)
+        })
+    }
+</script> {% endcomment %}
+{% endblock content %}

@@ -1,0 +1,106 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<main class="singleProject my-md">
+	<div class="container">
+		<div class="layout">
+			<div class="column column--1of3">
+				<h3 class="singleProject__subtitle">Tools & Stack</h3>
+				<div class="singleProject__toolStack">
+					{% for t in blog.tags.all %}
+					<span class="tag tag--pill tag--sub tag--lg">
+						<small>{{t.name}}</small>
+					</span>
+					{% endfor %}
+				</div>
+				{% if blog.demo_link %}
+				<a class="singleProject__liveLink" href="{{blog.demo_link}}" target="_blank"><i
+						class="im im-external-link"></i>Demo Link</a>
+				<br />
+				{% endif %}
+				{% if blog.source_link %}
+				<a class="singleProject__liveLink" href="{{blog.source_link}}" target="_blank"><i
+						class="im im-external-link"></i>Source Link</a>
+				{% endif %}
+			</div>
+			<div class="column column--2of3">
+				<img class="singleProject__preview" src="{{blog.imageURL}}" alt="{{blog.title}}" />
+				<a href="{% url 'profile' blog.author.id %}" class="singleProject__developer">By {{blog.author}}</a>
+				<h2 class="singleProject__title">{{blog.title}}</h2>
+				{% if blog.short_intro %}
+				<h5 class="singleProject__info">{{blog.short_intro|linebreaksbr}}</h5>
+				<br />
+				{% endif %}
+				<h6 class="singleProject__info">
+					{{blog.description|linebreaksbr}}
+				</h6>
+
+				<div class="comments">
+					<h3 class="singleProject__subtitle">Feedback</h3>
+					<h5 class="project--rating">
+						{{blog.vote_ratio}}% Positive
+						Feedback ({{blog.vote_total}} Vote{{blog.vote_total|pluralize:'s'}})
+					</h5>
+					{% if request.user.profile.id in blog.reviewers %}
+					<h6>Your review is already submitted... <a style='color:var(--color-main);display:none' href="">Edit</a>
+					</h6>
+					{% elif request.user.profile.id == blog.author.id %}
+					<h6>You don't want to comment on your own mistake... Right?</h6>
+					{% elif request.user.is_authenticated %}
+					<form class="form" action="{% url 'blog' blog.id %}" method="POST">
+						{% csrf_token %}
+						<!-- Textarea -->
+						{% for field in form %}
+						<div class="form__field">
+							<label for="formInput#textarea">{{field.label}} </label>
+							{{field}}
+						</div>
+
+						{% endfor %}
+						<input class="btn btn--sub btn--lg" type="submit" value="Comment" />
+					</form>
+					{% else %}
+{% comment %} I AM DAMN SURE THAT THIS IS BROKEN {% endcomment %}
+					<a href="{% url 'login' %}?next={{request.path}}">Please Login to leave a review</a>
+					{% endif %}
+					<div class="commentList">
+						{% for review in blog.review_set.all %}
+						{% if review.body %}
+						<div class="comment">
+							<a href="{% url 'profile' review.author.id %}">
+								<div
+									style="border-radius:50%;padding:5px 17px;background-color:var(--color-main-light);font-size: 3rem;">
+									{{review.author.name|slice:'1'}}
+									</div>
+								{% comment %} <img class="avatar avatar--md" src="{{review.author.imageURL}}" alt="{{review.author.name}}" /> {% endcomment %}
+							</a>
+							<div class="comment__details">
+								<a href="{% url 'profile' review.author.id %}" class="comment__author">{{review.author.name}}</a>
+								<p class="comment__info">
+									{{review.body|linebreaksbr}}
+								</p>
+							</div>
+						</div>
+
+						{% endif %}
+						{% endfor %}
+						{% comment %} <div class="comment">
+							<a href="profile.html">
+								<img class="avatar avatar--md" src="https://avatars.githubusercontent.com/u/33843378" alt="user" />
+							</a>
+							<div class="comment__details">
+								<a href="profile.html" class="comment__author">Dennis Ivanov</a>
+								<p class="comment__info">
+									Consectetur adipisicing elit. Reprehenderit alias numquam perferendis mollitia minus minima
+									exercitationem possimus ab deserunt qui, ratione, dignissimos ut magni laborum quo.
+								</p>
+							</div>
+						</div> {% endcomment %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+</main>
+{% endblock content %}

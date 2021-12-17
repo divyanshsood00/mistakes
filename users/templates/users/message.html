@@ -1,0 +1,32 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<main class="messagePage my-xl">
+    <div class="content-box">
+        <div class="message">
+            <div style="display: flex;justify-content: space-between;align-items: center;">
+                <a class="backButton" style="max-width:90%" href="{% url 'inbox' %}"><i
+                        class="im im-angle-left"></i></a>
+                <form action="" method="post" style="width:45px;color: var(--color-main);">
+                    {% csrf_token %}
+                    <button type="submit" style="background: transparent;border: 0;" class="">
+                        <i class="im im-trash-can"></i>
+                    </button>
+                </form>
+            </div>
+
+            <h2 class="message__subject">{{myMessage.subject}}</h4>
+                {% if myMessage.sender %}
+                <a href="{% url 'profile' myMessage.sender.id %}" class="message__author">{{myMessage.name}}</a>
+                {% else %}
+                <p class="message__author">{{myMessage.name}}</p>
+
+                {% endif %}
+                <p class="message__date">{{myMessage.created}}</p>
+                <div class="message__body">{{myMessage.body|linebreaksbr}}</div>
+        </div>
+    </div>
+</main>
+
+{% endblock content %}
