@@ -14,6 +14,8 @@ class BlogForm(ModelForm):
         widgets = {
             'tags': forms.CheckboxSelectMultiple(),
         }
+        labels = {'demo_link': 'Reference Link 1',
+                  'source_link': 'Reference Link 2'}
 
     def __init__(self, *args, **kwargs):
         super(BlogForm, self).__init__(*args, **kwargs)
