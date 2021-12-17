@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
-import django_heroku
 
 from pathlib import Path
 import os
@@ -173,5 +172,3 @@ cloudinary.config(
 # if live this is true, get current working directory
 if os.getcwd() == '/app':
     DEBUG = False
-
-django_heroku.settings(locals())
