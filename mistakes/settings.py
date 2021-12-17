@@ -172,3 +172,6 @@ cloudinary.config(
 # if live this is true, get current working directory
 if os.getcwd() == '/app':
     DEBUG = False
+
+# Activate Django-Heroku.
+# django_heroku.settings(locals())
