@@ -8,7 +8,6 @@ backports.zoneinfo==0.2.1
 beautifulsoup4==4.8.2
 bleach==4.1.0
 blinker==1.4
-catfish==4.16.0
 ccsm==0.9.14.1
 certifi==2019.11.28
 cffi==1.15.0
